@@ -1,55 +1,73 @@
 import Usuario from "../models/Usuario.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { usuarioSchemaYup } from "../validations/usuarioValidation.js";
 
-class UsuarioController {
-  async index(req, res) {
-    const itens = await Usuario.find().populate('aluno_id professor_id');
-    res.status(200).json(itens);
+export const index = async (req, res) => {
+  try {
+    const usuarios = await Usuario.find();
+    res.json(usuarios);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao listar usuários", error });
   }
-  async show(req, res) {
-    const item = await Usuario.findById(req.params.id).populate('aluno_id professor_id');
-    if (!item) return res.status(404).json({ erro: "Usuário não encontrado" });
-    res.status(200).json(item);
+};
+
+export const show = async (req, res) => {
+  try {
+    const usuario = await Usuario.findById(req.params.id);
+    if (!usuario) return res.status(404).json({ message: "Usuário não encontrado" });
+    res.json(usuario);
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao buscar usuário", error });
   }
-  async store(req, res) {
-    try {
-      await usuarioSchemaYup.validate(req.body);
-      const hashed = await bcrypt.hash(req.body.senha, 10);
-      const user = await Usuario.create({ ...req.body, senha: hashed });
-      res.status(201).json({ id: user._id, email: user.email, role: user.role });
-    } catch (err) {
-      res.status(400).json({ erro: err.message });
-    }
+};
+
+export const store = async (req, res) => {
+  try {
+    const { nome, email, senha } = req.body;
+    const senhaHash = await bcrypt.hash(senha, 10);
+    const novoUsuario = await Usuario.create({ nome, email, senha: senhaHash });
+    res.status(201).json(novoUsuario);
+  } catch (error) {
+    res.status(400).json({ message: "Erro ao criar usuário", error });
   }
-  async login(req, res) {
-    try {
-      const { email, senha } = req.body;
-      const user = await Usuario.findOne({ email });
-      if (!user) return res.status(404).json({ erro: "Usuário não encontrado" });
-      const ok = await bcrypt.compare(senha, user.senha);
-      if (!ok) return res.status(401).json({ erro: "Senha inválida" });
-      const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'secret', { expiresIn: '8h' });
-      res.status(200).json({ token });
-    } catch (err) {
-      res.status(400).json({ erro: err.message });
-    }
+};
+
+export const login = async (req, res) => {
+  try {
+    const { email, senha } = req.body;
+    const usuario = await Usuario.findOne({ email });
+    if (!usuario) return res.status(404).json({ message: "Usuário não encontrado" });
+
+    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
+    if (!senhaCorreta) return res.status(401).json({ message: "Senha incorreta" });
+
+    const token = jwt.sign({ id: usuario._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    res.json({ message: "Login realizado com sucesso", token });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao realizar login", error });
   }
-  async update(req, res) {
-    try {
-      const update = { ...req.body };
-      if (update.senha) update.senha = await bcrypt.hash(update.senha, 10);
-      const item = await Usuario.findByIdAndUpdate(req.params.id, update, { new: true });
-      if (!item) return res.status(404).json({ erro: "Usuário não encontrado" });
-      res.status(200).json(item);
-    } catch (err) {
-      res.status(400).json({ erro: err.message });
-    }
+};
+
+export const update = async (req, res) => {
+  try {
+    const usuarioAtualizado = await Usuario.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!usuarioAtualizado) return res.status(404).json({ message: "Usuário não encontrado" });
+    res.json(usuarioAtualizado);
+  } catch (error) {
+    res.status(400).json({ message: "Erro ao atualizar usuário", error });
   }
-  async delete(req, res) {
-    const item = await Usuario.findByIdAndDelete(req.params.id);
-    if (!item) return res.status(404).json({ erro: "Usuário não encontrado" });
-    res.status(200).json({ mensagem: "Usuário removido" });
+};
+
+// 👇 aqui o segredo: exporte com outro nome e depois alias no export final
+const deletar = async (req, res) => {
+  try {
+    const usuarioRemovido = await Usuario.findByIdAndDelete(req.params.id);
+    if (!usuarioRemovido) return res.status(404).json({ message: "Usuário não encontrado" });
+    res.json({ message: "Usuário deletado com sucesso" });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao deletar usuário", error });
   }
-}
+};
+
+// 👇 exporta com o alias "delete"
+export { deletar as delete };
