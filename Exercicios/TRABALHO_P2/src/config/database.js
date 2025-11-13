@@ -9,9 +9,9 @@ export default async function connectDB() {
     await mongoose.connect(uri, { 
       dbName: process.env.MONGODB_DBNAME || undefined,
     });
-    console.log("MongoDB connected");
+    console.log("Conectado ao MongoDB Atlas com sucesso!");
   } catch (err) {
-    console.error("MongoDB connection error:", err.message);
+    console.error("Erro ao conectar ao MongoDB Atlas:", err.message);
     process.exit(1);
   }
 }
