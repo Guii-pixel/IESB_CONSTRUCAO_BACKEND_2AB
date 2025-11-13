@@ -36,4 +36,4 @@ app.use('/usuarios', usuarioRoutes);
 app.get('/', (req, res) => res.json({ ok: true, mensagem: 'SchoolManager API' }));
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));

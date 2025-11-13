@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-dotenv.config(); // Carrega variáveis do .env
+dotenv.config();
 
 const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
