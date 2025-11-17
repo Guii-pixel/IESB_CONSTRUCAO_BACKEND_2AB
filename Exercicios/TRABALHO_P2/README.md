@@ -91,6 +91,12 @@ POST /disciplinas
 PUT /disciplinas/:id  
 DELETE /disciplinas/:id  
 
+ENDEREÇOS: 
+GET /endereco 
+POST /endereco  
+PUT /endereco/:id  
+DELETE /endereco/:id  
+
 
 TURMAS: 
 GET /turmas  

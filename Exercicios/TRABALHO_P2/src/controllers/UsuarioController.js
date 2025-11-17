@@ -41,7 +41,11 @@ export const login = async (req, res) => {
     const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
     if (!senhaCorreta) return res.status(401).json({ message: "Senha incorreta" });
 
-    const token = jwt.sign({ id: usuario._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(
+      { id: usuario._id },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRATION }
+    )
     res.json({ message: "Login realizado com sucesso", token });
   } catch (error) {
     res.status(500).json({ message: "Erro ao realizar login", error });
@@ -58,7 +62,7 @@ export const update = async (req, res) => {
   }
 };
 
-// 👇 aqui o segredo: exporte com outro nome e depois alias no export final
+
 const deletar = async (req, res) => {
   try {
     const usuarioRemovido = await Usuario.findByIdAndDelete(req.params.id);
@@ -69,5 +73,5 @@ const deletar = async (req, res) => {
   }
 };
 
-// 👇 exporta com o alias "delete"
+
 export { deletar as delete };
