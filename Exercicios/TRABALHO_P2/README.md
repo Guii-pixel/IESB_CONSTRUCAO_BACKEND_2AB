@@ -236,22 +236,22 @@ Guilherme Almeida Siqueira:
 Implementação dos CRUDs: Aluno, Avaliação, Boletim
 Criação do banco e testes no Atlas
 Parte da documentação
-Issues resolvidas: #1, #3, #7
+Issues resolvidas: #1, #3, #9, #10, #15, #16
 
 Alisson dos Santos Teixeira:
 CRUDs: Curso, Disciplina, Endereço
 Validações com Yup
-Diagrama do banco
-Issues resolvidas: #2, #4
+Collection do Postman
+Issues resolvidas: #4, #5, #6, #14
 
 Rhayner de Paiva Oliveira Mendonça:
 CRUDs: Matrícula e Professor
 Implementação do login com JWT
-Collection do Postman
-Issues resolvidas: #5, #6
+Diagrama do banco
+Issues resolvidas: #2 ,#7, #8, #13
 
 Diego Sousa Leal: 
 CRUDs: Turma e Usuário
 Implementação do login com JWT
 Collection do Postman
-Issues resolvidas: #5, #6
+Issues resolvidas: #11, #12, #13
