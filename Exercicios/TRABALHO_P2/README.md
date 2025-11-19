@@ -15,7 +15,7 @@ O objetivo é fornecer um sistema robusto, seguro e escalável, utilizando Node.
 -bcryptjs (hash de senha)
 -JSON Web Token (JWT)
 -Postman (testes de API)
--Git e GitHub (controle de versão)
+-GitHub (controle de versão)
 
 
 # DESCRIÇÃO DO SISTEMA
@@ -194,8 +194,8 @@ ENDEREÇO:
 
 # INSTALAÇÃO, CONFIGURAÇÃO E EXECUÇÃO
 1. Clonar o repositório:
-    git clone https://github.com/seuUsuario/schoolmanager-api.git
-    cd schoolmanager-api
+    git clone https://github.com/Guii-pixel/IESB_CONSTRUCAO_BACKEND_2AB/tree/main/Exercicios/TRABALHO_P2
+    cd TRABALHO_P2
 
 2. Instalar dependências: 
     npm install
