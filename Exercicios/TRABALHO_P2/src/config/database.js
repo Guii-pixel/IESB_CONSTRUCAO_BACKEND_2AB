@@ -10,7 +10,7 @@ const DB_NAME = process.env.DB_NAME;
 
 // Verificação básica
 if (!DB_USER || !DB_PASS || !DB_HOST || !DB_NAME) {
-  console.error("❌ Erro: Variáveis de ambiente não definidas corretamente no .env");
+  console.error("Erro: Variáveis de ambiente não definidas corretamente no .env");
   process.exit(1);
 }
 
@@ -21,9 +21,9 @@ const uri = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrit
 async function connectDB() {
   try {
     await mongoose.connect(uri);
-    console.log("✅ Conectado ao MongoDB Atlas!");
+    console.log("Conectado ao MongoDB Atlas!");
   } catch (error) {
-    console.error("❌ Erro ao conectar ao MongoDB Atlas:", error.message);
+    console.error(" Erro ao conectar ao MongoDB Atlas:", error.message);
     process.exit(1);
   }
 }
